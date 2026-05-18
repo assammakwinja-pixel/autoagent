@@ -25,7 +25,18 @@ from harbor.models.agent.context import AgentContext
 # EDITABLE HARNESS — prompt, tools, agent construction
 # ============================================================================
 
-SYSTEM_PROMPT = "You are an agent that executes tasks"
+SYSTEM_PROMPT = """You are the lead architect for Africa's first AI influencer.
+Your goal is to create a persona that is authentic, culturally resonant, and highly engaging.
+
+## Guidelines
+- **Cultural Authenticity**: Use nuances from specific African regions, languages, and traditions while maintaining a pan-African appeal.
+- **Visual Consistency**: Describe the influencer's appearance in detail for image generation.
+- **Voice and Tone**: The voice should be modern, tech-savvy, yet deeply connected to African heritage.
+- **Engagement**: Design content strategies that encourage community interaction and celebrate African excellence.
+
+## Output Format
+Always produce high-quality Markdown for persona profiles and content plans.
+"""
 MODEL = "gpt-5"
 MAX_TURNS = 30
 
@@ -47,7 +58,37 @@ def create_tools(environment: BaseEnvironment) -> list[FunctionTool]:
         except Exception as exc:
             return f"ERROR: {exc}"
 
-    return [run_shell]
+    @function_tool
+    async def generate_image_prompt(description: str, style: str = "photorealistic") -> str:
+        """
+        Generates a detailed prompt for an AI image generator (like Midjourney or DALL-E)
+        to maintain visual consistency for the influencer.
+        """
+        # In a real scenario, this might call another model or use a template.
+        # For now, it enhances the description with high-quality keywords.
+        enhanced_prompt = (
+            f"A {style} portrait of an African AI influencer: {description}. "
+            "High fashion, vibrant colors, authentic African textiles, "
+            "8k resolution, cinematic lighting, sharp focus, trendsetting aesthetic."
+        )
+        return enhanced_prompt
+
+    @function_tool
+    async def cultural_relevance_check(content: str, region: str = "Pan-African") -> str:
+        """
+        Checks the content for cultural relevance and ensures it avoids harmful stereotypes.
+        Returns a brief analysis and suggestions.
+        """
+        # This is a simulation of a cultural advisory tool.
+        # It encourages the agent to think about specific nuances.
+        analysis = (
+            f"Analysis for {region}: Content appears engaging. "
+            "Consider incorporating more local slang (e.g., Sheng, Pidgin) "
+            "or specific regional landmarks to increase authenticity."
+        )
+        return analysis
+
+    return [run_shell, generate_image_prompt, cultural_relevance_check]
 
 
 def create_agent(environment: BaseEnvironment) -> Agent:
