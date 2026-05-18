@@ -8,12 +8,15 @@ harness in `agent.py` so the agent gets better at solving tasks on its own.
 
 ## Directive
 
-Build a generally capable autonomous coding and terminal agent.
+Build the first AI influencer for Africa.
 
-The agent receives a natural-language task instruction, works inside a sandboxed
-environment, and must produce the correct final artifact or system state.
+The agent should create a culturally resonant, engaging, and authentic persona
+representing the diversity and vibrancy of the African continent. It should be
+able to generate persona details, biographies, content strategies, and social
+media posts that resonate with pan-African and global audiences.
 
-Evaluation is done by task-specific verifiers.
+Evaluation is done by verifiers checking for cultural relevance, persona
+consistency, and creative quality.
 
 Do NOT change the model from `gpt-5` unless the human explicitly changes that
 constraint.
@@ -23,14 +26,11 @@ constraint.
 Before starting a new experiment:
 
 1. Read `README.md`, this file, and `agent.py`.
-2. Read `docs/good-harness.md` and `docs/openai-agents-sdk/tools.md` for tool
-   design patterns, `agent.as_tool()`, and handoff mechanics.
-3. If the current branch contains tasks, read a representative sample of task
-   instructions and verifier code.
-4. Check whether runtime dependencies are missing.
-5. Update `pyproject.toml` or `Dockerfile.base` only if needed.
-6. Build the base image and verify the agent imports cleanly.
-7. Initialize `results.tsv` if it does not exist.
+2. Read a representative sample of task instructions and verifier code in `tasks/`.
+3. Check whether runtime dependencies are missing.
+4. Update `pyproject.toml` or `Dockerfile.base` only if needed.
+5. Build the base image and verify the agent imports cleanly.
+6. Initialize `results.tsv` if it does not exist.
 
 The first run must always be the unmodified baseline. Establish the baseline
 before trying any ideas.
@@ -41,8 +41,7 @@ Everything above the `FIXED ADAPTER BOUNDARY` comment in `agent.py`:
 
 - `SYSTEM_PROMPT`, `MODEL`, `MAX_TURNS` — agent configuration
 - `create_tools(environment)` — add, remove, or modify tools
-- `create_agent(environment)` — change agent construction, add handoffs or
-  sub-agents via `agent.as_tool()`
+- `create_agent(environment)` — change agent construction
 - `run_task(environment, instruction)` — change orchestration logic
 
 You may make any general harness improvement that helps the agent perform
@@ -54,17 +53,10 @@ overall system design.
 Prompt tuning alone has diminishing returns. Adding specialized tools is a
 high-leverage improvement axis.
 
-A single `run_shell` tool forces the agent to write boilerplate from scratch on
-every call, wasting tokens and introducing errors. Specialized tools reduce
-failure modes by:
-
-- surfacing structured data instead of raw stdout
-- providing clear error messages the model can act on
-- matching the model's name-based priors (models pattern-match tool names
-  before reading descriptions)
-
-For spreadsheet tasks, consider tools like: workbook inspection (sheet names,
-dimensions, sample values), targeted cell reading, and validated cell writing.
+Specialized tools for an AI influencer agent might include:
+- `generate_image_prompt`: Create detailed prompts for image generators like Midjourney or DALL-E to maintain visual consistency.
+- `cultural_relevance_check`: A tool (perhaps backed by a sub-agent) that verifies if content is culturally appropriate and avoids stereotypes.
+- `trend_analyzer`: Simulate or access trending topics in various African regions (Lagos, Nairobi, Johannesburg, etc.).
 
 The SDK also supports `agent.as_tool()` — wrapping an agent as a callable tool
 for the main agent. A practical use: a verification sub-agent that re-reads the
