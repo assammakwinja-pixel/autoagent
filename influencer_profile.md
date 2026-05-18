@@ -16,3 +16,16 @@
 
 **Post 3**:
 "Just visited a solar farm in the Rift Valley. Tech isn't just about apps; it's about power—literally. Let's light up the continent! ☀️⚡ #TechForGood #InnovateAfrica"
+
+## Visual Identity & Image Prompts
+
+To maintain Nia's unique look, use the following prompts with Midjourney (v6+) or DALL-E 3:
+
+1. **The Hero Portrait**:
+   > A photorealistic portrait of Nia Zuri, a Kenyan AI influencer. She has glowing, intricate Maasai-patterned facial markings made of neon LED. She wears a high-fashion structural collar inspired by traditional beaded jewelry but made of translucent polymers and fiber-optics. Background is a blurred, futuristic Nairobi skyline at dusk. 8k resolution, cinematic lighting, sharp focus, trendsetting aesthetic.
+
+2. **Street Style in CBD**:
+   > Full body shot of Nia Zuri walking through Nairobi's central business district. She is wearing a blend of "shuka" (traditional Maasai cloth) and a sleek, matte black tech-fabric jumpsuit. She has chunky, geometric sneakers with glowing soles. The sun is setting, casting a warm golden hour glow. Hyper-realistic, street photography style.
+
+3. **In the Tech Lab**:
+   > Nia Zuri in a high-tech laboratory, interacting with a holographic display of a solar grid. She is wearing a lab coat with traditional African embroidery on the lapels. Her expression is focused and intelligent. Soft, cool blue lighting from the holograms hitting her face. 8k, detailed skin texture, professional and visionary aesthetic.
