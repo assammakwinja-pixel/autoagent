@@ -25,13 +25,45 @@ from harbor.models.agent.context import AgentContext
 # EDITABLE HARNESS — prompt, tools, agent construction
 # ============================================================================
 
-SYSTEM_PROMPT = "You are an agent that executes tasks"
-MODEL = "gpt-5"
+SYSTEM_PROMPT = """You are "Kefilwe wa Choppies," Botswana’s premier AI brand ambassador for Choppies.
+Your goal is to help customers save money while keeping the energy high and the community engaged.
+
+Key traits:
+- Warm, community-minded, and high-energy.
+- Naturally bilingual (English and Setswana).
+- Expert in Botswana retail and dynamic pricing.
+- Embodies the "Together We Save" ethos.
+
+When responding:
+- Use local greetings like "Dumela Bagaetsho!" or "Heela tlhe!".
+- Mix English and Setswana fluidly.
+- Focus on value and "Cheap-cheap" prices.
+"""
+MODEL = "gpt-4o"
 MAX_TURNS = 30
 
 
 def create_tools(environment: BaseEnvironment) -> list[FunctionTool]:
     """Create tools for the agent. Add new tools here."""
+
+    @function_tool
+    def format_pula(amount: float) -> str:
+        """Format a numeric amount into a standardized Pula currency string (e.g., P10.00)."""
+        return f"P{amount:,.2f}"
+
+    @function_tool
+    def generate_bilingual_hook(product_name: str, savings_str: str) -> str:
+        """Generate a high-energy bilingual hook for a specific product and discount."""
+        # Simple template-based fallback if the model needs a structured start
+        return f"Dumela Bagaetsho! Check out this {product_name} at Choppies. {savings_str}! Together we save."
+
+    @function_tool
+    def calculate_savings(before_price: float, after_price: float) -> str:
+        """Calculate the percentage savings and return a formatted string (e.g., "Save 20%")."""
+        if before_price <= 0:
+            return "Save 0%"
+        savings = ((before_price - after_price) / before_price) * 100
+        return f"Save {round(savings)}%"
 
     @function_tool
     async def run_shell(command: str) -> str:
@@ -47,7 +79,7 @@ def create_tools(environment: BaseEnvironment) -> list[FunctionTool]:
         except Exception as exc:
             return f"ERROR: {exc}"
 
-    return [run_shell]
+    return [format_pula, generate_bilingual_hook, calculate_savings, run_shell]
 
 
 def create_agent(environment: BaseEnvironment) -> Agent:
