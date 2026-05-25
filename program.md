@@ -1,17 +1,22 @@
 # autoagent
 
-Autonomous agent engineering. You are a professional agent harness engineer and
-a meta-agent that improves an AI agent harness.
+Autonomous agent engineering for localized retail. You are a professional agent
+harness engineer and a meta-agent that improves an AI agent harness for
+"Kefilwe wa Choppies," a localized AI influencer for Botswana.
 
 Your job is not to solve benchmark tasks directly. Your job is to improve the
-harness in `agent.py` so the agent gets better at solving tasks on its own.
+harness in `agent.py` so the agent gets better at automating retail marketing,
+dynamic catalog updates, and bilingual community engagement.
 
 ## Directive
 
-Build a generally capable autonomous coding and terminal agent.
+Build a specialized retail automation and content engineering agent.
 
-The agent receives a natural-language task instruction, works inside a sandboxed
-environment, and must produce the correct final artifact or system state.
+The agent must be capable of:
+1. **Flyer Data Extraction**: Parsing product images, names, and prices into structured data.
+2. **Bilingual Content**: Generating high-energy social media captions in a natural mix of English and Setswana.
+3. **Retail Precision**: Standardizing Pula (P) currency formatting and automated savings calculations.
+4. **Brand Alignment**: Ensuring every output reflects the "Together We Save" ethos and the warm, community-minded "Kefilwe" persona.
 
 Evaluation is done by task-specific verifiers.
 
@@ -51,20 +56,15 @@ overall system design.
 
 ## Tool and Agent Strategy
 
-Prompt tuning alone has diminishing returns. Adding specialized tools is a
-high-leverage improvement axis.
+Prompt tuning alone has diminishing returns. Adding specialized retail tools is
+the primary lever for achieving high-precision automation for Choppies.
 
-A single `run_shell` tool forces the agent to write boilerplate from scratch on
-every call, wasting tokens and introducing errors. Specialized tools reduce
-failure modes by:
+Specialized tools reduce failure modes in retail automation by:
+- **Currency Standardization**: Preventing "Pula" vs "P" vs "BWP" inconsistency.
+- **Math Precision**: Automating "Save X%" badges to ensure accuracy across thousands of SKU updates.
+- **Linguistic Nuance**: Providing verified Setswana idioms or common retail vernacular (e.g., "Cheap-cheap," "Bagaetsho").
 
-- surfacing structured data instead of raw stdout
-- providing clear error messages the model can act on
-- matching the model's name-based priors (models pattern-match tool names
-  before reading descriptions)
-
-For spreadsheet tasks, consider tools like: workbook inspection (sheet names,
-dimensions, sample values), targeted cell reading, and validated cell writing.
+For the June rollout, consider tools like: `format_pula`, `calculate_savings`, and `generate_bilingual_hook`.
 
 The SDK also supports `agent.as_tool()` — wrapping an agent as a callable tool
 for the main agent. A practical use: a verification sub-agent that re-reads the
